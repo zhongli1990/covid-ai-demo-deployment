@@ -1,6 +1,8 @@
 
 "Covid-19 AI demo in Docker" deployment including dockerised Flask, FastAPI, Tensorflow Serving and HA Proxy etc etc.
 
+Sample application on AWS: http://ec2-18-134-16-118.eu-west-2.compute.amazonaws.com:8056
+
 Default: docker-compose up -d
 
 Scale-up: docker-compose up --scale fastapi=2 --scale flask=2 -d
