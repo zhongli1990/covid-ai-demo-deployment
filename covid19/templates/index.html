@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+   <head>
+	  <link rel="icon" href="../static/covid19-confirmed.png">
+	  <meta charset="UTF-8">
+      <title>Covid19-XRay-AI</title>
+      <link rel="stylesheet" href='../static/style.css'/>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <style>
+            body {
+                background: #1D5292;
+                color: white;
+                text-align: center;
+                font-family: Arial;
+            }
+	   .column {
+  		float: center;
+  		width: 48%;
+  		padding: 2px;
+	   }
+	   .row::after {
+  		content: "";
+  		clear: both;
+  		display: table;
+	   }
+      </style>
+   </head>
+ <body>
+	 <img src="{{ url_for('static', filename='covid19-indepedent.jpg')}}" height="120" />
+    <h4>Convid19-Detector</h4> 
+    <h1>AI assisted Covid-19 detection of Lung X-Rays</h1>
+    <hr>
+    <h4>[Disclaimer] - "Covid-19 AI Service in a Docker" is for demo purpose only - NOT for clinicial use</h3>
+    <h1><form action="{{ url_for('query') }}" method = "POST" enctype = "multipart/form-data">
+        <input type = "file" name = "file" />
+        <input type = "submit"/>
+    </form>
+    <hr>
+    <h2>Classification Result for Covid-19:</h2>
+  	
+    {% if prediction == 'Covid-19 POSITIVE'  %}
+          <h1 style="color:red;"> [{{prediction}}]    </h1>
+    {% else %}
+          <h1 style="color:yellow;"> [{{prediction}}]    </h1>
+    {% endif %}
+
+    <h2>Covid-19 Probability: {{confidence}}%</h2>
+
+    <h3> Image File Name: {{filename}} </h3>
+
+       {% if confidence < 65  %}
+          <img src="{{ url_for('static', filename='Image_Prediction.png')}}" width="80%">
+       {% else %}          
+	  <div class="row">  
+               <div class="column">
+                    <img src="{{ xray_image }}", alt="Raw Image", style="width:100%">
+	       </div>		
+               <div class="column">
+                    <img src="{{ xray_image_with_heatmap }}", alt="AI Marked Image", style="width:100%">
+	       </div>
+          </div>
+	{% endif %}
+   
+     <p> @2020 AI demo service for Covid-19 Classification</p>
+     <br>
+     <h4>Disclaimer</h4>
+     <p>This is an AI demo service for Deep Learning technologies, deployments and service integrations. It is NOT for clinicial use by any means.<p/>
+   </body>
+</html>

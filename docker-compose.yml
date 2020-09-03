@@ -1,0 +1,84 @@
+version: '2.3'
+
+services:
+
+  tf2svg1:    # tf serving CPU, without GPU
+    #build:
+    #  context: ./covid19/covid19_models
+    image: tensorflow/serving
+    hostname: tf2svg1
+    environment:
+      - MODEL_NAME=covid19
+    restart: on-failure
+    ports:
+      - 8511:8501 # tensorflow servring port 
+      - 8510:8500 # grpc port 
+    volumes:
+      - ./covid19/covid19_models:/models/covid19  # tf2 serving convention
+    
+  tf2svg2:   # tf serving GPU
+    #build:
+    #  context: ./covid19/covid19_models
+    image: tensorflow/serving:latest-gpu
+    hostname: tf2svg2
+    runtime: nvidia
+    environment:
+      - MODEL_NAME=covid19
+      - NVIDIA_VISIBLE_DEVICES=all
+    restart: on-failure
+    ports:
+      - 8521:8501 # tensorflow servring port 
+      - 8520:8500 # grpc port 
+    volumes:
+      - ./covid19/covid19_models:/models/covid19  # tf2 serving convention
+    #command: nvidia-smi
+    
+  tf2jpt:   # tensorflow with jupyter 
+    build:
+      context: ./notebooks
+    image: tf2-jupyter:0.1.0
+    hostname: tf2jpt
+    restart: on-failure
+    ports:
+      - 8586:8888 # 8888 is the docker jupyter service port
+      - 8506:6006 # 6006 is the tensorboard port
+    volumes:
+      - ./notebooks:/tf   #shared volumes
+   
+  flask:    # flask server for covid19 service web pages and APIs, with backend tensorflow servering
+    build:
+      context: ./covid19
+    image: ai-service-flask:0.1.0
+    hostname: flask
+    restart: on-failure
+    ports:
+      - 8051-8053:5000 # tensorflow servring port 
+    volumes:
+      - ./covid19:/app  # tf2 serving convention
+    
+  fastapi:    # FastAPI with Uvicorn server for covid19 service web pages and APIs, with backend tensorflow servering
+    build:
+      context: ./covid-fastapi
+    image: ai-service-fastapi:0.2.0
+    hostname: fastapi
+    restart: on-failure
+    ports:
+      - 8056-8058:8000 # tensorflow servring port 
+    volumes:
+      - ./covid-fastapi:/app  # tf2 serving convention
+
+  lb:
+    build:
+      context: ./haproxy
+    image: 'haproxy:0.0.1'
+    #volumes:
+    #  - ./haproxy:/haproxy-override
+    links:
+      - fastapi
+      - flask
+    ports:
+      - 8088:8088
+    expose:
+      - 8088
+
+
