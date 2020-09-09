@@ -2,7 +2,7 @@
 *"Covid-19 AI demo in all-Docker"* deployment including dockerised Flask, FastAPI, Tensorflow Serving and HA Proxy etc etc.
 
 ## Full documentation 
-Full documentation is pulished [here](https://community.intersystems.com/post/deploy-mldl-models-api-service-stacks)
+Full documentation is pulished [Deploy ML/DL models into a consolidated AI demo service stack](https://community.intersystems.com/post/deploy-mldl-models-api-service-stacks)
 
 ## Scope
 #### In scope:
