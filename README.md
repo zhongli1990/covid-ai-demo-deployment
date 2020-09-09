@@ -32,7 +32,7 @@ _Note_:   Tensorflow Serving  with GPU is for demo purpose only - you can simply
 ![Logical Deployment Pattern](https://community.intersystems.com/sites/default/files/inline/images/images/image(870).png)
 
 ## Environment Topology
-![Physical Deployment Topology](https://community.intersystems.com/sites/default/files/inline/images/images/image(878).png)
+![Physical Deployment Topology](https://community.intersystems.com/sites/default/files/inline/images/images/image(891).png)
 
 ## Volumes Mapping & Directory Structure
 Please refer to [full documentation](https://community.intersystems.com/post/deploy-mldl-models-api-service-stacks) on section "Dockerised Components" 
