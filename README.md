@@ -20,7 +20,7 @@ _Note_:   Tensorflow Serving  with GPU is for demo purpose only - you can simply
 
 #### Out of scope or on next wish list:
 
-* Ningx or Apache etc web servers are omitted in demo for now
+* Nginx or Apache etc web servers are omitted in demo for now
 * RabbitMQ and Redis  - queue broker for reliable messaging that can be replace by IRIS or Ensemble.   
 * IAM (Intersystems API Manger) or Kong is on wish list
 * SAM (Intersystems System Alert & Monitoring) 
